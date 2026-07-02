@@ -70,20 +70,40 @@ function montarAbaRecusas() {
 
   // Linha 3 — cabeçalhos das colunas
   const CABS = [
-    "RGCT","NOME","MOTIVO DE RECUSA","EQUIPE",   // OD
-    "RGCT","NOME","MOTIVO DE RECUSA","EQUIPE",   // OE
+    "RGCT","NOME","MOTIVO DE RECUSA","EQUIPE",
+    "RGCT","NOME","MOTIVO DE RECUSA","EQUIPE",
   ];
   const CORES = [
     "#244F7A","#244F7A","#C00000","#2E75B6",
     "#1A3A5C","#1A3A5C","#9B0000","#1F5C96",
   ];
+
+  const borda = SpreadsheetApp.newBorderStyle ? null : null; // placeholder
   CABS.forEach((nome, i) => {
     ws.getRange(3, i + 1)
       .setValue(nome)
-      .setBackground(CORES[i]).setFontColor("#FFFFFF")
-      .setFontWeight("bold").setHorizontalAlignment("center");
+      .setBackground(CORES[i])
+      .setFontColor("#FFFFFF")
+      .setFontWeight("bold")
+      .setFontSize(11)
+      .setHorizontalAlignment("center")
+      .setBorder(true, true, true, true, false, false,
+                 "#FFFFFF", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
   });
-  ws.setRowHeight(3, 22);
+  ws.setRowHeight(3, 26);
+
+  // Bordas em toda a planilha (dados: linhas 4-1000)
+  ws.getRange("A1:H1000")
+    .setBorder(true, true, true, true, true, true,
+               "#CCCCCC", SpreadsheetApp.BorderStyle.SOLID);
+
+  // Linha divisória vermelha entre OD (D) e OE (E)
+  ws.getRange("D1:D1000")
+    .setBorder(false, false, false, true, false, false,
+               "#C00000", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+  ws.getRange("E1:E1000")
+    .setBorder(false, true, false, false, false, false,
+               "#C00000", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
 
   // Larguras
   [13, 22, 36, 28, 13, 22, 36, 28].forEach((w, i) =>
