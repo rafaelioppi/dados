@@ -1,5 +1,6 @@
 // ============================================================
-// MONTA ABA RECUSAS — uma linha por recusa
+// REGISTRO DE RECUSAS — Google Apps Script
+// Menu: ⚕ RECUSAS → Registrar Recusa
 // ============================================================
 
 const MOTIVOS = [
@@ -20,17 +21,57 @@ const MOTIVOS = [
   "Utilizado para valvas cardíacas","Utilizado parente/cônjuge",
 ];
 
+// ── Menu ─────────────────────────────────────────────────────
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("⚕ RECUSAS")
+    .addItem("📋 Configurar aba RECUSAS", "montarAbaRecusas")
+    .addSeparator()
+    .addItem("➕ Registrar recusa", "abrirFormulario")
+    .addToUi();
+}
+
+// ── Abre o formulário popup ───────────────────────────────────
+function abrirFormulario() {
+  const ss    = SpreadsheetApp.getActiveSpreadsheet();
+  const wsEq  = ss.getSheetByName("EQUIPES");
+  const equipes = wsEq
+    ? wsEq.getRange(3, 1, Math.max(wsEq.getLastRow() - 2, 1), 1)
+           .getValues().flat().filter(String)
+    : [];
+
+  const html = HtmlService.createHtmlOutput(formHtml(equipes))
+    .setWidth(440)
+    .setHeight(420);
+
+  SpreadsheetApp.getUi().showModalDialog(html, "Registrar Recusa");
+}
+
+// ── Salva a recusa na aba RECUSAS ────────────────────────────
+function salvarRecusa(dados) {
+  const ss    = SpreadsheetApp.getActiveSpreadsheet();
+  let   wsRec = ss.getSheetByName("RECUSAS");
+  if (!wsRec) montarAbaRecusas();
+  wsRec = ss.getSheetByName("RECUSAS");
+
+  const proxima = Math.max(wsRec.getLastRow() + 1, 3);
+  wsRec.getRange(proxima, 1, 1, 5).setValues([[
+    dados.rgct,
+    dados.hospital,
+    dados.olho,
+    dados.mr,
+    dados.equipe
+  ]]);
+
+  // Fundo alternado para facilitar leitura
+  const bg = proxima % 2 === 0 ? "#FFF2CC" : "#FFFFFF";
+  wsRec.getRange(proxima, 1, 1, 5).setBackground(bg);
+}
+
+// ── Monta a aba RECUSAS ──────────────────────────────────────
 function montarAbaRecusas() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  // ── Aba LISTAS (oculta) com os 39 motivos ───────────────
-  let wsL = ss.getSheetByName("LISTAS");
-  if (!wsL) wsL = ss.insertSheet("LISTAS");
-  wsL.clearContents();
-  MOTIVOS.forEach((m, i) => wsL.getRange(i + 1, 1).setValue(m));
-  wsL.hideSheet();
-
-  // ── Aba RECUSAS ──────────────────────────────────────────
   let ws = ss.getSheetByName("RECUSAS");
   if (!ws) {
     ws = ss.insertSheet("RECUSAS");
@@ -40,71 +81,114 @@ function montarAbaRecusas() {
     ws.clearFormats();
   }
 
-  // Linha 1: título
   ws.getRange("A1:E1").merge()
     .setValue("RECUSAS DE CÓRNEAS")
-    .setBackground("#C00000")
-    .setFontColor("#FFFFFF")
-    .setFontWeight("bold")
-    .setFontSize(13)
+    .setBackground("#C00000").setFontColor("#FFFFFF")
+    .setFontWeight("bold").setFontSize(13)
     .setHorizontalAlignment("center");
   ws.setRowHeight(1, 32);
 
-  // Linha 2: cabeçalhos
-  const CABS = ["RGCT", "HOSPITAL", "OLHO", "MOTIVO DE RECUSA", "EQUIPE"];
+  const CABS  = ["RGCT","HOSPITAL","OLHO","MOTIVO DE RECUSA","EQUIPE"];
   const CORES = ["#1F4E79","#1F4E79","#1F4E79","#C00000","#2E75B6"];
-
   CABS.forEach((nome, i) => {
     ws.getRange(2, i + 1)
       .setValue(nome)
-      .setBackground(CORES[i])
-      .setFontColor("#FFFFFF")
-      .setFontWeight("bold")
-      .setHorizontalAlignment("center");
+      .setBackground(CORES[i]).setFontColor("#FFFFFF")
+      .setFontWeight("bold").setHorizontalAlignment("center");
   });
   ws.setRowHeight(2, 24);
 
-  // Larguras
   [14, 20, 8, 38, 30].forEach((w, i) => ws.setColumnWidth(i + 1, w * 7));
-
-  // ── Dropdowns nas linhas de dados (3 a 1000) ────────────
-  const MAX_LINHAS = 998; // linhas 3 a 1000
-
-  // Coluna C: OLHO — OD ou OE
-  const regraOlho = SpreadsheetApp.newDataValidation()
-    .requireValueInList(["OD", "OE"], true)
-    .setAllowInvalid(false)
-    .build();
-  ws.getRange(3, 3, MAX_LINHAS, 1).setDataValidation(regraOlho);
-
-  // Coluna D: MOTIVO DE RECUSA — 39 motivos SNT
-  const regraMR = SpreadsheetApp.newDataValidation()
-    .requireValueInRange(wsL.getRange(1, 1, MOTIVOS.length, 1), true)
-    .setAllowInvalid(false)
-    .build();
-  ws.getRange(3, 4, MAX_LINHAS, 1).setDataValidation(regraMR);
-
-  // Coluna E: EQUIPE — da aba EQUIPES
-  const wsEq = ss.getSheetByName("EQUIPES");
-  if (wsEq && wsEq.getLastRow() >= 3) {
-    const regraEq = SpreadsheetApp.newDataValidation()
-      .requireValueInRange(wsEq.getRange(3, 1, wsEq.getLastRow() - 2, 1), true)
-      .setAllowInvalid(false)
-      .build();
-    ws.getRange(3, 5, MAX_LINHAS, 1).setDataValidation(regraEq);
-  }
-
-  // Congela cabeçalho
   ws.setFrozenRows(2);
+}
 
-  SpreadsheetApp.getUi().alert(
-    "✔ Aba RECUSAS montada!\n\n" +
-    "Estrutura: uma linha por recusa\n" +
-    "  A: RGCT\n" +
-    "  B: HOSPITAL\n" +
-    "  C: OLHO (dropdown OD/OE)\n" +
-    "  D: MOTIVO DE RECUSA (dropdown 39 motivos)\n" +
-    "  E: EQUIPE (dropdown aba EQUIPES)\n\n" +
-    "Sem limite de linhas — pode ter 100 recusas por RGCT."
-  );
+// ── HTML do formulário ───────────────────────────────────────
+function formHtml(equipes) {
+  const opcoesEq = equipes.map(e =>
+    `<option value="${e}">${e}</option>`).join("");
+
+  const opcoesMR = MOTIVOS.map(m =>
+    `<option value="${m}">${m}</option>`).join("");
+
+  return `
+<style>
+  body { font-family: Arial, sans-serif; font-size: 13px; padding: 16px; }
+  label { display: block; margin-top: 10px; font-weight: bold; color: #1F4E79; }
+  input, select {
+    width: 100%; padding: 6px; margin-top: 4px;
+    border: 1px solid #ccc; border-radius: 4px; font-size: 13px;
+  }
+  .row2 { display: flex; gap: 10px; }
+  .row2 > div { flex: 1; }
+  button {
+    margin-top: 18px; width: 100%; padding: 10px;
+    background: #C00000; color: #fff; border: none;
+    border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer;
+  }
+  button:hover { background: #9B0000; }
+</style>
+
+<div class="row2">
+  <div>
+    <label>RGCT</label>
+    <input id="rgct" type="text" placeholder="Ex: 510686-143">
+  </div>
+  <div>
+    <label>HOSPITAL</label>
+    <input id="hospital" type="text" placeholder="Ex: HCPA">
+  </div>
+</div>
+
+<label>OLHO</label>
+<select id="olho">
+  <option value="">— selecione —</option>
+  <option value="OD">OD — Olho Direito</option>
+  <option value="OE">OE — Olho Esquerdo</option>
+</select>
+
+<label>MOTIVO DE RECUSA</label>
+<select id="mr">
+  <option value="">— selecione —</option>
+  ${opcoesMR}
+</select>
+
+<label>EQUIPE</label>
+<select id="equipe">
+  <option value="">— selecione (opcional) —</option>
+  ${opcoesEq}
+</select>
+
+<button onclick="enviar()">REGISTRAR RECUSA</button>
+
+<script>
+function enviar() {
+  var rgct     = document.getElementById('rgct').value.trim();
+  var hospital = document.getElementById('hospital').value.trim();
+  var olho     = document.getElementById('olho').value;
+  var mr       = document.getElementById('mr').value;
+  var equipe   = document.getElementById('equipe').value;
+
+  if (!rgct)     { alert('Informe o RGCT.'); return; }
+  if (!olho)     { alert('Selecione o olho (OD ou OE).'); return; }
+  if (!mr)       { alert('Selecione o motivo de recusa.'); return; }
+
+  google.script.run
+    .withSuccessHandler(function() {
+      document.querySelector('button').textContent = '✔ Salvo!';
+      document.querySelector('button').style.background = '#107c41';
+      setTimeout(function(){ resetForm(); }, 1200);
+    })
+    .salvarRecusa({ rgct, hospital, olho, mr, equipe });
+}
+
+function resetForm() {
+  document.getElementById('rgct').value = '';
+  document.getElementById('hospital').value = '';
+  document.getElementById('olho').value = '';
+  document.getElementById('mr').value = '';
+  document.getElementById('equipe').value = '';
+  document.querySelector('button').textContent = 'REGISTRAR RECUSA';
+  document.querySelector('button').style.background = '#C00000';
+}
+<\/script>`;
 }
