@@ -172,7 +172,20 @@ const server = http.createServer((req, res) => {
   sendFile(res, filePath);
 });
 
-server.listen(PORT, () => {
-  const addr = `http://localhost:${PORT}`;
-  console.log(`\n  🧪 Petrobras Study Tracker\n  ${addr}\n`);
-});
+function tentarPorta(port) {
+  server.listen(port, () => {
+    const addr = `http://localhost:${port}`;
+    console.log(`\n  🧪 Petrobras Study Tracker\n  ${addr}\n`);
+  });
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`  Porta ${port} ocupada, tentando ${port + 1}...`);
+      tentarPorta(port + 1);
+    } else {
+      console.error('  Erro ao iniciar servidor:', err.message);
+      process.exit(1);
+    }
+  });
+}
+
+tentarPorta(PORT);
