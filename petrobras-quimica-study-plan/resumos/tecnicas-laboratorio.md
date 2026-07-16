@@ -11,67 +11,131 @@
 | **Simples** | Separar sólido + líquido | Água + sal |
 | **Fracionada** | Separar líquidos miscíveis | Petróleo, álcool + água |
 
-**Macete:** Destilação FRACIONADA separa por diferença de PONTO DE EBULIÇÃO. A coluna de fracionamento permite múltiplas condensações e vaporizações.
+**Macete:** Fracionada separa por diferença de PONTO DE EBULIÇÃO.
 
 ### Extração
-- **Líquido-líquido:** Separa soluto entre dois solventes imiscíveis (funil de separação)
-- **Sólido-líquido:** Dissolve soluto de uma mistura sólida
+- **Líquido-líquido:** Soluto entre dois solventes imiscíveis (funil de separação)
+- **Sólido-líquido:** Dissolve soluto da mistura sólida
 
 ### Filtração
 | Tipo | Característica |
 |------|---------------|
-| **Simples** | Papel de filtro + funil. Gravidade. |
-| **A vácuo** | Funil de Buchner + Kitasato. Mais rápida. |
+| Simples | Papel + funil. Gravidade |
+| **A vácuo** | Funil de Buchner + Kitasato. Mais rápida |
 
-### Outras técnicas
+### Outras
+- **Decantação:** Deixa sedimentar, verte o líquido
+- **Centrifugação:** Acelera sedimentação
+- **Gravimetria:** Pesagem do resíduo após aquecimento
 
-| Técnica | Aplicação |
-|---------|-----------|
-| **Decantação** | Líquido + sólido (deixa sedimentar, depois verte) |
-| **Centrifugação** | Acelera a sedimentação por força centrífuga |
-| **Gravimetria** | Pesagem do resíduo após aquecimento/calcinação |
-| **Cristalização** | Obter sólidos puros a partir de solução |
+### Exercícios - Técnicas
 
-**Questão típica Cesgranrio:** "Qual a melhor técnica para separar..." — você precisa saber qual técnica usar para cada caso.
+**Q1.** **Para separar areia + água, a técnica é:**
+A) Destilação
+B) **Filtração**
+C) Extração
+D) Cromatografia
+E) Decantação
+
+**Q2.** **O petróleo é separado em frações por:**
+A) Destilação simples
+B) **Destilação fracionada**
+C) Filtração
+D) Decantação
+E) Centrifugação
+
+**Q3.** **Para separar iodo em água usando CCl₄, a técnica é:**
+A) Destilação
+B) Filtração
+C) **Extração líquido-líquido**
+D) Decantação
+E) Centrifugação
+
+**Q4.** **A filtração a vácuo usa:**
+A) Funil simples
+B) **Funil de Buchner + Kitasato**
+C) Balão volumétrico
+D) Condensador
+E) Bureta
+
+**Q5.** **Aquecer a 800°C para determinar cinzas é:**
+A) Filtração
+B) **Calcinação** (gravimetria)
+C) Destilação
+D) Extração
+E) Cromatografia
+
+**Q6.** **A centrifugação acelera:**
+A) Destilação
+B) **Sedimentação**
+C) Ebulição
+D) Filtração
+E) Extração
 
 ---
 
 ## 2. TITULOMETRIA (~2 questões)
 
-### Conceitos Fundamentais
+### Conceitos
 
 | Termo | Definição |
 |-------|-----------|
-| **Titulação** | Adição controlada de uma solução (titulante) a outra (titulado) |
-| **Titulante** | Solução de concentração conhecida (na bureta) |
-| **Titulado** | Solução de concentração desconhecida (no erlenmeyer) |
-| **Ponto de equivalência** | Onde a reação se completa (n° mols equivalentes) |
-| **Ponto final** | Onde o indicador muda de cor (deve ser ≈ ponto de equivalência) |
-| **Padrão primário** | Substância pura usada para preparar solução de concentração exata |
-| **Fator de correção (FC)** | FC = C_real / C_teórica |
+| **Titulante** | Solução de concentração conhecida (bureta) |
+| **Titulado** | Solução de concentração desconhecida (erlenmeyer) |
+| **Ponto de equivalência** | Reação completa |
+| **Ponto final** | Indicador muda de cor |
+| **Padrão primário** | Substância pura, estável, massa conhecida |
 
-### Volumetria Ácido-Base
-
-**Fórmula fundamental:** nₐ × Vₐ × Cₐ = n_b × V_b × C_b
-
-Onde n = número de H⁺/OH⁻ trocados.
-
-**Exemplo:** H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O
-Na titulação: 2 × Vₐ × Mₐ = 1 × V_b × M_b (2 H⁺ do H₂SO₄)
+### Fórmula Ácido-Base
+**nₐ × Vₐ × Mₐ = n_b × V_b × M_b** (n = nº de H⁺/OH⁻)
 
 ### Volumetria Redox
-- **Permanganometria:** KMnO₄ (MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O)
-- **Iodometria:** I₂ + 2e⁻ → 2I⁻
+- **Permanganometria:** MnO₄⁻ (violeta) → Mn²⁺ (incolor) em meio ácido
+- **Iodometria:** I₂ + amido → azul escuro
 
-### Cálculo Titulométrico
+### Exercícios - Titulometria
 
-**Passo a passo:**
-1. Escrever a reação BALANCEADA
-2. Calcular n° de mols do titulante: n = M × V
-3. Usar a estequiometria para achar n° de mols do titulado
-4. Calcular a concentração: M = n/V
+**Q7.** **25 mL de HCl com NaOH 0,1 M gastam 20 mL. [HCl]:**
+A) 0,04 M
+B) **0,08 M** (25×M = 20×0,1 → M=2/25=0,08)
+C) 0,10 M
+D) 0,12 M
+E) 0,16 M
 
-**Macete Cesgranrio:** Se a questão der o fator de correção (FC), multiplique a concentração encontrada por ele.
+**Q8.** **H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O. 50 mL de H₂SO₄ 0,1 M são neutralizados por qual volume de NaOH 0,2 M?**
+A) 25 mL
+B) **50 mL** (2×0,05×0,1 = 1×V×0,2 → 0,01=0,2V → V=0,05L=50mL)
+C) 75 mL
+D) 100 mL
+E) 150 mL
+
+**Q9.** **Indicador de titulação ácido-base:**
+A) **Vermelho de metila** ou fenolftaleína
+B) Ferroína
+C) Amido
+D) Permanganato
+E) Azul de metileno
+
+**Q10.** **18 mL de NaOH 0,1 M titulam 10 mL de H₂SO₄. [H₂SO₄]:**
+A) 0,036 M
+B) 0,054 M
+C) **0,09 M** (2×0,01×M = 1×0,018×0,1 → 0,02M=0,0018 → M=0,09)
+D) 0,12 M
+E) 0,18 M
+
+**Q11.** **Um padrão primário deve ter:**
+A) Ser higroscópico
+B) **Pureza conhecida e alta**
+C) Reagir lentamente
+D) Ser líquido
+E) Baixa massa molar
+
+**Q12.** **Na bureta, antes da titulação, coloca-se:**
+A) Água destilada
+B) **A solução titulante** (ambientar a bureta)
+C) O indicador
+D) O titulado
+E) O padrão primário
 
 ---
 
@@ -79,155 +143,55 @@ Na titulação: 2 × Vₐ × Mₐ = 1 × V_b × M_b (2 H⁺ do H₂SO₄)
 
 | Técnica | Princípio | Aplicação |
 |---------|-----------|-----------|
-| **IV** | Absorção de radiação IR por ligações moleculares | Identificar grupos funcionais |
-| **UV-Vis** | Absorção de luz UV/visível | Quantificar compostos (Beer: A = εbc) |
-| **HPLC** | Separação em coluna com fase móvel líquida | Misturas complexas |
-| **CG** | Separação em coluna com fase móvel gasosa | Compostos voláteis |
-| **Potenciometria** | Medida de potencial (pHmetro) | pH, titulação potenciométrica |
+| **IV** | Absorção IR por ligações | Identificar grupos funcionais |
+| **UV-Vis** | Absorção de luz (A = εbc) | Quantificar compostos |
+| **HPLC** | Separação em coluna (fase líquida) | Misturas complexas |
+| **CG** | Separação em coluna (fase gasosa) | Compostos voláteis |
+| **Potenciometria** | Medida de potencial | pH, titulação potenciométrica |
 
 **Macete:** Cromatografia = SEPARA. Espectrometria = IDENTIFICA/QUANTIFICA.
 
----
+### Exercícios - Análise Instrumental
 
-## EXERCÍCIOS - TÉCNICAS E TITULOMETRIA (Estilo Cesgranrio)
-
-### Questão 1 (Técnicas)
-**Para separar uma mistura de areia e água, a técnica mais adequada é:**
-A) Destilação fracionada
-B) Extração líquido-líquido
-C) Filtração
-D) Cromatografia
-E) Destilação simples
-
-### Questão 2 (Destilação)
-**O petróleo é separado em frações comerciais por meio de:**
-A) Destilação simples
-B) Destilação fracionada
-C) Filtração
-D) Decantação
-E) Centrifugação
-
-### Questão 3 (Titulação)
-**Na titulação de 25 mL de HCl com NaOH 0,1 mol/L, foram gastos 20 mL. A concentração do HCl é:**
-A) 0,04 mol/L
-B) 0,08 mol/L
-C) 0,10 mol/L
-D) 0,12 mol/L
-E) 0,16 mol/L
-
-### Questão 4 (Volumetria)
-**Na reação H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O, qual volume de NaOH 0,2 mol/L neutraliza 50 mL de H₂SO₄ 0,1 mol/L?**
-A) 25 mL
-B) 50 mL
-C) 75 mL
-D) 100 mL
-E) 150 mL
-
-### Questão 5 (Gravimetria)
-**Uma amostra é aquecida em mufla a 800°C para determinar seu teor de cinzas. Esta técnica é chamada de:**
-A) Filtração
-B) Calcinação
-C) Destilação
-D) Extração
-E) Cromatografia
-
-### Questão 6 (Indicadores)
-**O ponto final de uma titulação ácido-base é identificado pela:**
-A) Mudança de cor do indicador
-B) Formação de precipitado
-C) Liberação de gás
-D) Mudança de temperatura
-E) Formação de bolhas
-
-### Questão 7 (Padrão Primário)
-**Um padrão primário deve ter qual característica?**
-A) Ser higroscópico
-B) Ter pureza conhecida e alta
-C) Reagir lentamente
-D) Ser líquido
-E) Ter massa molar baixa
-
-### Questão 8 (Extração)
-**Para separar iodo (I₂) dissolvido em água usando CCl₄, a técnica é:**
-A) Destilação
-B) Filtração
-C) Extração líquido-líquido
-D) Decantação
-E) Centrifugação
-
-### Questão 9 (Cromatografia)
-**A técnica que separa compostos por diferença de afinidade entre fase móvel e estacionária é:**
+**Q13.** **A técnica que separa por afinidade entre fases é:**
 A) Destilação
 B) Titulação
 C) Gravimetria
-D) Cromatografia
+D) **Cromatografia**
 E) Potenciometria
 
-### Questão 10 (Cálculo Titulométrico)
-**Foram gastos 18 mL de NaOH 0,1 mol/L para titular 10 mL de uma amostra de H₂SO₄. Qual a concentração do H₂SO₄?**
-**Reação: H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O**
-A) 0,036 mol/L
-B) 0,054 mol/L
-C) 0,09 mol/L
-D) 0,12 mol/L
-E) 0,18 mol/L
-
-### Questão 11 (Filtração)
-**A filtração a vácuo utiliza qual equipamento?**
-A) Funil simples + papel
-B) Funil de Buchner + Kitasato
-C) Balão volumétrico
-D) Béquer + bastão
-E) Condensador
-
-### Questão 12 (UV-Vis)
-**A Lei de Beer-Lambert (A = εbc) relaciona absorbância com:**
+**Q14.** **A Lei de Beer (A=εbc) relaciona absorbância com:**
 A) Temperatura
-B) Concentração e caminho óptico
+B) **Concentração e caminho óptico**
 C) Pressão
 D) pH
 E) Volume
 
-### Questão 13 (Indicador)
-**Qual indicador é usado em titulação ácido-base?**
-A) Vermelho de metila
-B) Ferroína
-C) Amido
-D) Azul de metileno
-E) Permanganato
-
-### Questão 14 (Centrifugação)
-**A centrifugação acelera o processo de:**
-A) Destilação
-B) Sedimentação
-C) Ebulição
-D) Filtração
-E) Extração
-
-### Questão 15 (Titulação Redox)
-**Na permanganometria, o MnO₄⁻ em meio ácido é reduzido a:**
-A) MnO₂
-B) Mn²⁺
-C) MnO₄²⁻
-D) Mn
-E) MnO₃
+**Q15.** **A cromatografia gasosa é ideal para:**
+A) Sais inorgânicos
+B) **Compostos voláteis**
+C) Polímeros sólidos
+D) Metais pesados
+E) Soluções iônicas
 
 ---
 
-### GABARITO COMENTADO
+## GABARITO
 
-**Q1:** C (sólido insolúvel + líquido → filtração)
-**Q2:** B (petróleo = mistura de líquidos miscíveis com diferentes PE)
-**Q3:** B (Vₐ × Mₐ = V_b × M_b → 25 × Mₐ = 20 × 0,1 → Mₐ = 2/25 = 0,08)
-**Q4:** B (nₐVₐMₐ = n_bV_bM_b → 2×0,05×0,1 = 1×V_b×0,2 → 0,01 = 0,2V_b → V_b = 0,05L = 50mL)
-**Q5:** B (aquecimento a altas temperaturas = calcinação)
-**Q6:** A (indicador muda de cor no ponto final)
-**Q7:** B (padrão primário: alta pureza, estável, não higroscópico)
-**Q8:** C (dois líquidos imiscíveis, um soluto migra entre fases)
-**Q9:** D (definição de cromatografia)
-**Q10:** C (nₐVₐMₐ = n_bV_bM_b → 2×0,01×Mₐ = 1×0,018×0,1 → 0,02Mₐ = 0,0018 → Mₐ = 0,09)
-**Q11:** B (funil de Buchner acoplado ao Kitasato para filtração a vácuo)
-**Q12:** B (A = εbc: absortividade × concentração × caminho)
-**Q13:** A (vermelho de metila, fenolftaleína são indicadores ácido-base comuns)
-**Q14:** B (centrifugação acelera sedimentação)
-**Q15:** B (MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O)
+| Q | R | Explicação |
+|---|----|------------|
+| 1 | B | Sólido insolúvel + líquido → filtração |
+| 2 | B | Líquidos miscíveis com diferentes PE |
+| 3 | C | Dois líquidos imiscíveis, soluto migra entre fases |
+| 4 | B | Funil de Buchner + Kitasato = filtração a vácuo |
+| 5 | B | Aquecimento a altas T para determinar resíduo |
+| 6 | B | Centrífuga acelera sedimentação |
+| 7 | B | 25×M = 20×0,1 → M = 0,08 |
+| 8 | B | 2×0,05×0,1 = 1×V×0,2 → V=0,05L=50mL |
+| 9 | A | Vermelho de metila, fenolftaleína |
+| 10 | C | 2×0,01×M = 1×0,018×0,1 → M=0,09 |
+| 11 | B | Padrão primário: alta pureza |
+| 12 | B | Bureta deve ser ambientada com titulante |
+| 13 | D | Definição de cromatografia |
+| 14 | B | A=εbc: absortividade × concentração × caminho |
+| 15 | B | CG é para compostos voláteis |
