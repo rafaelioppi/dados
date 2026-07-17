@@ -91,7 +91,10 @@ app.delete('/api/dados/:nome.json/:chave', async (req, res) => {
   }
 });
 
-app.get('/api/planos', async (req, res) => {
+app.get('/api/planos', (req, res, next) => {
+  res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
+  next();
+}, async (req, res) => {
   try {
     const lerDiretorio = async (subDir, grupo) => {
       const dirCompleto = path.join(PLANOS_DIR, subDir);
@@ -121,6 +124,7 @@ app.get('/api/planos', async (req, res) => {
 });
 
 const planoHandler = async (req, res) => {
+  res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
   const { grupo, nome } = req.params;
   const subPath = grupo ? path.join(grupo, nome) : nome;
   const caminho = path.join(PLANOS_DIR, subPath + '.md');

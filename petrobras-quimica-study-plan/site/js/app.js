@@ -877,13 +877,13 @@ const app = createApp({
         let md;
         const apiUrl = `/api/plano/${planoSelecionado.value}`;
         const staticUrl = `planos/${planoSelecionado.value}.md`;
-        const r = await fetch(apiUrl);
+        const r = await fetch(apiUrl, { cache: 'no-store' });
         if (r.ok) {
           md = await r.text();
         } else {
-          const r2 = await fetch(staticUrl);
+          const r2 = await fetch(staticUrl, { cache: 'no-store' });
           if (!r2.ok) {
-            const r3 = await fetch(`/${staticUrl}`);
+            const r3 = await fetch(`/${staticUrl}`, { cache: 'no-store' });
             if (!r3.ok) throw new Error('Não encontrado');
             md = await r3.text();
           } else {
