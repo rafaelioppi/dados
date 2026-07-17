@@ -840,6 +840,20 @@ const app = createApp({
     });
 
     // --- Plano ---
+    const PLANOS_LISTA = [
+      { id: 'caderno-erros', nome: 'Caderno de Erros', grupo: 'Cronogramas e Planos' },
+      { id: 'checklist-conteudos', nome: 'Checklist de Conteúdos', grupo: 'Cronogramas e Planos' },
+      { id: 'ciclo-estudos', nome: 'Ciclo de Estudos', grupo: 'Cronogramas e Planos' },
+      { id: 'conteudo-programatico', nome: 'Conteúdo Programático', grupo: 'Cronogramas e Planos' },
+      { id: 'cronograma-12-semanas-provas', nome: 'Cronograma 12 Semanas (Provas)', grupo: 'Cronogramas e Planos' },
+      { id: 'cronograma-cesgranrio', nome: 'Cronograma Cesgranrio', grupo: 'Cronogramas e Planos' },
+      { id: 'cronograma-completo', nome: 'Cronograma Completo', grupo: 'Cronogramas e Planos' },
+      { id: 'metodologia-estudo', nome: 'Metodologia de Estudo', grupo: 'Cronogramas e Planos' },
+      { id: 'quadro-horas', nome: 'Quadro de Horas', grupo: 'Cronogramas e Planos' },
+      { id: 'relatorio-metodos-concurseiros', nome: 'Relatório — Métodos de Concurseiros', grupo: 'Cronogramas e Planos' },
+      { id: 'revisoes-simulados', nome: 'Revisões e Simulados', grupo: 'Cronogramas e Planos' },
+    ];
+
     const planoSelecionado = ref('');
     const planoHtml = ref('');
     const carregandoPlano = ref(false);
@@ -858,9 +872,15 @@ const app = createApp({
       if (!planoSelecionado.value) return;
       carregandoPlano.value = true;
       try {
+        let md;
         const r = await fetch(`/api/plano/${planoSelecionado.value}`);
-        if (!r.ok) throw new Error('Não encontrado');
-        const md = await r.text();
+        if (r.ok) {
+          md = await r.text();
+        } else {
+          const r2 = await fetch(`/planos/${planoSelecionado.value}.md`);
+          if (!r2.ok) throw new Error('Não encontrado');
+          md = await r2.text();
+        }
         if (typeof marked !== 'undefined') {
           planoHtml.value = marked.parse(md, { breaks: true, gfm: true });
         } else {
@@ -877,8 +897,10 @@ const app = createApp({
         const r = await fetch('/api/planos');
         if (r.ok) {
           planosDisponiveis.value = await r.json();
+          return;
         }
       } catch {}
+      planosDisponiveis.value = PLANOS_LISTA;
     }
 
     // --- Nav ---
