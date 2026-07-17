@@ -253,6 +253,18 @@ const Armazenamento = {
     return this._deleteFromServer('flashcards', id);
   },
 
+  // --- Cronograma (progresso semanal) ---
+  async getCronograma() {
+    return this._getData('cronograma', {});
+  },
+
+  async alternarCronograma(chave, concluido) {
+    const prog = await this.getCronograma();
+    prog[chave] = concluido;
+    this._salvarLocal('cronograma', prog);
+    return this._putToServer('cronograma', prog);
+  },
+
   // --- Ciclo (posição atual) ---
   getCiclo() {
     return this._getData('ciclo', { posicao: 0, concluido: {} });

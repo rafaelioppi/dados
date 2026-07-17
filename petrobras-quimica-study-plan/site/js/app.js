@@ -572,6 +572,87 @@ function useFlashcards() {
   return { flashcards, formFlashcard, editandoFlashcard, carregandoFlashcards, flashcardsAgrupados, carregarFlashcards, novoFlashcard, salvarFlashcard, editarFlashcard, removerFlashcard, cancelarFlashcard, modoRevisao, configurandoRevisao, deckRevisao, cardAtual, progressoRevisao, opcoesRevisao, abrirConfiguracaoRevisao, iniciarRevisao, proximoCard, marcarResultado, finalizarRevisao, cancelarConfiguracaoRevisao };
 }
 
+function useCronograma(cronogramaData) {
+  const progresso = ref({});
+  const carregado = ref(false);
+
+  const cronChave = (semana, dia, periodo) => `s${semana}_${dia}_${periodo}`;
+
+  function slotConcluido(semana, dia, periodo) {
+    return !!progresso.value[cronChave(semana, dia, periodo)];
+  }
+
+  const totalSlots = computed(() => {
+    let total = 0;
+    cronogramaData.forEach(sem => { sem.dias.forEach(d => { total += d.slots.length; }); });
+    return total;
+  });
+
+  const totalConcluidos = computed(() => {
+    return Object.values(progresso.value).filter(Boolean).length;
+  });
+
+  const progressoGeralCron = computed(() => {
+    if (totalSlots.value === 0) return 0;
+    return Math.round(totalConcluidos.value / totalSlots.value * 100);
+  });
+
+  const progressoSemana = (semana) => {
+    const sem = cronogramaData[semana - 1];
+    if (!sem) return 0;
+    let total = 0, concluidos = 0;
+    sem.dias.forEach(d => {
+      d.slots.forEach(s => {
+        total++;
+        if (slotConcluido(semana, d.dia, s.periodo)) concluidos++;
+      });
+    });
+    return total > 0 ? Math.round(concluidos / total * 100) : 0;
+  };
+
+  const totalSlotsSemana = (semana) => {
+    const sem = cronogramaData[semana - 1];
+    if (!sem) return 0;
+    let total = 0;
+    sem.dias.forEach(d => { total += d.slots.length; });
+    return total;
+  };
+
+  const concluidosSemana = (semana) => {
+    const sem = cronogramaData[semana - 1];
+    if (!sem) return 0;
+    let concluidos = 0;
+    sem.dias.forEach(d => {
+      d.slots.forEach(s => {
+        if (slotConcluido(semana, d.dia, s.periodo)) concluidos++;
+      });
+    });
+    return concluidos;
+  };
+
+  async function alternarSlot(semana, dia, periodo) {
+    const chave = cronChave(semana, dia, periodo);
+    const novoValor = !progresso.value[chave];
+    progresso.value[chave] = novoValor;
+    await Armazenamento.alternarCronograma(chave, novoValor);
+  }
+
+  async function carregarProgresso() {
+    if (carregado.value) return;
+    const dados = await Armazenamento.getCronograma();
+    progresso.value = dados;
+    carregado.value = true;
+  }
+
+  return {
+    progresso, carregado,
+    slotConcluido, alternarSlot,
+    totalSlots, totalConcluidos, progressoGeralCron,
+    progressoSemana, totalSlotsSemana, concluidosSemana,
+    carregarProgresso
+  };
+}
+
 // ===================================================================
 //  APLICAÇÃO VUE - O Orquestrador
 // ===================================================================
@@ -658,6 +739,7 @@ const app = createApp({
       diario.value = await Armazenamento.getDiario();
       revisoes.value = await Armazenamento.getRevisoes();
       ciclo.value = await Armazenamento.getCiclo();
+      await carregarProgresso();
       initPlanos();
       carregando.value = false;
     });
@@ -712,13 +794,19 @@ const app = createApp({
     const periodos = ['08h-10h', '13h-15h', '20h-22h'];
     const cronSemana = ref(1);
     const cronograma = CRONOGRAMA_SEMANAL;
+    const {
+      slotConcluido, alternarSlot,
+      totalSlots, totalConcluidos, progressoGeralCron,
+      progressoSemana, totalSlotsSemana, concluidosSemana,
+      carregarProgresso
+    } = useCronograma(cronograma);
 
     const semanaAtualDias = computed(() => {
       const s = cronograma[cronSemana.value - 1];
       return s ? s.dias : [];
     });
 
-    function materiaInfo(cod) { return MATERIA_MAP[cod] || { nome: cod, icone: '📘', cor: '#6b7280' }; }
+    function materiaInfo(cod) { return MATERIA_MAP[cod] || { nome: cod, icone: '\uD83D\uDCD8', cor: '#6b7280' }; }
 
     const materiasList = computed(() => {
       const seen = {};
@@ -825,7 +913,9 @@ const app = createApp({
       CICLO_ESTUDOS, REVISAO_INTERVALOS, DIAS_SEMANA,
       conteudosFiltrados, expandirTudo, colapsarTudo,
       // Cronograma
-      periodos, cronSemana, cronograma, semanaAtualDias, materiaInfo, materiasList
+      periodos, cronSemana, cronograma, semanaAtualDias, materiaInfo, materiasList,
+      slotConcluido, alternarSlot, totalSlots, totalConcluidos, progressoGeralCron,
+      progressoSemana, totalSlotsSemana, concluidosSemana
     };
   }
 });

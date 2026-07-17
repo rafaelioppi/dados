@@ -669,6 +669,59 @@ button {
 .plano-conteudo blockquote { border-left: 4px solid var(--primaria); padding: 8px 16px; margin: 12px 0; background: var(--bg); border-radius: 0 6px 6px 0; }
 .plano-conteudo input[type="checkbox"] { accent-color: var(--primaria); }
 
+/* Cronograma Semanal Interativo */
+.cron-barra-semana {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: var(--sombra);
+  padding: 16px 24px 20px;
+  margin-bottom: 16px;
+}
+
+.cron-barra-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-sec);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.cron-cell {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.cron-cell:hover { background: rgba(124, 58, 237, 0.04); }
+
+.cron-cell-feito { opacity: 0.75; }
+.cron-cell-feito:hover { opacity: 0.9; }
+
+.cron-check-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.cron-check {
+  width: 18px;
+  height: 18px;
+  accent-color: #7C3AED;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cron-conteudo-feito {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.cron-linha-completa .cron-dia-label::after {
+  content: ' ✅';
+  font-size: 12px;
+}
+
 /* Cronograma Semanal */
 .cron-topo {
   display: flex;

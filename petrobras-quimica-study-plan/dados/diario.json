@@ -1,6 +1,12 @@
 {
   "2026-07-16": {
+    "ciclo": false,
     "correcao": false,
-    "horas": false
+    "questoes": false,
+    "checklist": false,
+    "flashcards": false
+  },
+  "2026-07-17": {
+    "ciclo": false
   }
 }
