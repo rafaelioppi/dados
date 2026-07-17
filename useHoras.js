@@ -1,6 +1,6 @@
 import { ref, computed, watch } from 'vue';
 import { Armazenamento } from './armazenamento.js';
-import { DIAS_SEMANA, SEMANAS_PLANO, META_HORAS_SEMANA, CONTEUDOS } from './dados.js';
+import { DIAS_SEMANA, SEMANAS_PLANO, META_HORAS_SEMANA, META_HORAS_DIA, CONTEUDOS } from './dados.js';
 
 let instance;
 
@@ -75,6 +75,45 @@ export function useHoras() {
 
   const totalMeta = computed(() => SEMANAS_PLANO * META_HORAS_SEMANA);
 
-  instance = { horas, semanaAtual, DIAS_SEMANA, SEMANAS_PLANO, META_HORAS_SEMANA, horaValor, setHora, totalDia, totalMateriaSemana, horasSemana, totalAcumulado, totalHorasAcumuladas, horasSemanaAtual, metaSemanaCss, totalMeta };
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  const totalHoje = computed(() => {
+    const registros = horas.value[hoje] || {};
+    return Object.values(registros).reduce((acc, v) => acc + v, 0);
+  });
+
+  const registrosHoje = computed(() => {
+    const registros = horas.value[hoje] || {};
+    return Object.keys(registros)
+      .filter(id => registros[id] > 0)
+      .map(id => {
+        const materia = CONTEUDOS.find(c => c.id === id);
+        return {
+          id,
+          nome: materia ? materia.nome : id,
+          icone: materia ? materia.icone : '📚',
+          cor: materia ? materia.cor : '#6b7280',
+          horas: registros[id]
+        };
+      })
+      .sort((a, b) => b.horas - a.horas);
+  });
+
+  function adicionarHoras(data, materiaId, incremento) {
+    const atual = horaValor(data, materiaId);
+    setHora(data, materiaId, null, (atual + incremento));
+  }
+
+  function removerMateria(data, materiaId) {
+    if (horas.value[data]) {
+      delete horas.value[data][materiaId];
+      if (Object.keys(horas.value[data]).length === 0) {
+        delete horas.value[data];
+      }
+    }
+    horas.value = { ...horas.value };
+  }
+
+  instance = { horas, semanaAtual, DIAS_SEMANA, SEMANAS_PLANO, META_HORAS_SEMANA, META_HORAS_DIA, horaValor, setHora, totalDia, totalMateriaSemana, horasSemana, totalAcumulado, totalHorasAcumuladas, horasSemanaAtual, metaSemanaCss, totalMeta, totalHoje, registrosHoje, adicionarHoras, removerMateria };
   return instance;
 }

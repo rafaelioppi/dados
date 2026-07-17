@@ -626,6 +626,7 @@ export const CONTEUDOS = [
 
 export const SEMANAS_PLANO = 12;
 export const META_HORAS_SEMANA = 30;
+export const META_HORAS_DIA = 6;
 
 export const CICLO_ESTUDOS = [
   { materia: 'Português', icone: '📝', tempo: 80, peso: 4 },

@@ -9,6 +9,7 @@ import Simulados from './Simulados.vue';
 import Erros from './Erros.vue';
 import Diario from './Diario.vue';
 import Plano from './Plano.vue';
+import Relatorio from './Relatorio.vue';
 
 const carregando = ref(true);
 const menuAberta = ref(false);
@@ -23,6 +24,7 @@ const titulos = {
   simulados: { t: 'Simulados', s: 'Acompanhe seu desempenho' },
   erros: { t: 'Caderno de Erros', s: 'Transforme falhas em aprendizado' },
   diario: { t: 'Diário de Bordo', s: 'Seu checklist de hábitos diários' },
+  relatorio: { t: 'Relatório', s: 'Análise de desempenho e produtividade' },
   plano: { t: 'Plano de Estudos', s: 'Documentos e cronogramas' },
 };
 
@@ -64,6 +66,7 @@ const views = {
   simulados: Simulados,
   erros: Erros,
   diario: Diario,
+  relatorio: Relatorio,
   plano: Plano,
 };
 
@@ -75,6 +78,7 @@ const navLinks = [
   { view: 'simulados', icon: '📋', text: 'Simulados' },
   { view: 'erros', icon: '📕', text: 'Erros' },
   { view: 'diario', icon: '📌', text: 'Diário' },
+  { view: 'relatorio', icon: '📊', text: 'Relatório' },
 ];
 
 const planoLink = { view: 'plano', icon: '📖', text: 'Plano de Estudos' };
