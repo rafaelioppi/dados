@@ -6,7 +6,7 @@ const compression = require('compression');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SITE_DIR = path.join(__dirname, 'site_backup');
+const SITE_DIR = path.join(__dirname, 'site');
 const DADOS_DIR = path.join(__dirname, 'dados');
 const PLANOS_DIR = __dirname;
 
